@@ -1,0 +1,19 @@
+{
+  "name": "simple-list-example",
+  "version": "0.0.1",
+  "description": "super-glue Simple List",
+  "main": "src/index.coffee",
+  "scripts": {
+    "start": "node webpack.server.js"
+  },
+  "dependencies": {
+    "ramda-extras": "0.0.2",
+    "super-glue": "*"
+  },
+  "devDependencies": {
+    "coffee-loader": "^0.7.2",
+    "coffee-script": "^1.9.1",
+    "webpack": "^1.8.4",
+    "webpack-dev-server": "^1.8.0"
+  }
+}

@@ -10,15 +10,15 @@ export default {
 	// add the PureRenderMixin for optimized rendering
 	mixins: [React.addons.PureRenderMixin],
 
-	// the atom must be available on context
+	// the appState must be available on context
 	contextTypes: {
-		atom: React.PropTypes.object.isRequired
+		appState: React.PropTypes.object.isRequired
 	},
 
-	// get a map of cursors pointing to subsets of the atom
-	_getCursors: function(atom, cursors) {
+	// get a map of cursors pointing to subsets of the appState
+	_getCursors: function(appState, cursors) {
 		return cursors.keys().reduce((acc, key) => {
-			acc[key] = cursors[key].reduce((subset, path) => subset[path], atom);
+			acc[key] = cursors[key].reduce((subset, path) => subset[path], appState);
 		}, {});
 	},
 
@@ -45,12 +45,12 @@ export default {
 	},
 
 	componentWillMount: function() {
-		// get the entire atom
-		const atom = this.context && this.context.atom;
-		if (!atom) throw new Error('You have to pass an atom to your app wrapper');
+		// get the entire appState
+		const appState = this.context && this.context.appState;
+		if (!appState) throw new Error('You must pass appState to your root component');
 
-		// get a map of initial cursors pointing to subsets of the atom
-		const cursors = this._getCursors(atom, this.cursors);
+		// get a map of initial cursors pointing to subsets of the appState
+		const cursors = this._getCursors(appState, this.cursors);
 
 		// get an array of subscriptions to be applied
 		const subscriptions = this._getSubscriptions(this, cursors);
@@ -66,7 +66,7 @@ export default {
 	},
 
 	componentWillUnmount: function() {
-		// unsubscribe from all changes to the atom
+		// unsubscribe from all changes to the appState
 		this._subscriptions.forEach(this._unsubscribe__).bind(this);
 	}
 };
