@@ -34,10 +34,12 @@ export default {
 		}));
 	},
 
+	// bind update event on cursor to subscription function
 	_subscribe__: function(subscription) {
 		subscription.cursor.on('update', subscription.subscribe);
 	},
 
+	// remove the bound update event from the cursor
 	_unsubscribe__: function(subscription) {
 		subscription.cursor.off('update', subscription.subscribe);
 	},
