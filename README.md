@@ -56,7 +56,7 @@ React.createClass({
 
 	render: function() {
 		return button({
-			onClick: this.actions.updateText('I am jungle Jim'
+			onClick: this.actions.updateText('I am jungle Jim')
 		}, 'Update the text');
 	}
 });
