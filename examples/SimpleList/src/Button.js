@@ -11,11 +11,11 @@ export default React.createClass({
 	mixins: [Mixin],
 
 	actions: {
-		'create': 'list.add'
+		'add': 'list.create'
 	},
 
 	_handleClick: function() {
-		this.actions.create('whoooo');
+		this.actions.add();
 	},
 
 	render: function() {

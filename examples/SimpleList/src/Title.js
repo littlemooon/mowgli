@@ -15,6 +15,6 @@ export default React.createClass({
 	},
 
 	render: function() {
-		return h4({}, this.state.text.getValue());
+		return h4({}, this.state.text.val());
 	}
 });

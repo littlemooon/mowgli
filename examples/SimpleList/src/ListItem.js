@@ -8,10 +8,11 @@ export default React.createClass({
 	displayName: 'ListItem',
 
 	propTypes: {
-		item: React.PropTypes.object.isRequired
+		name: React.PropTypes.string,
+		color: React.PropTypes.string
 	},
 
 	render: function() {
-		return p({}, `The ${this.props.item.name} is ${this.props.item.color}`);
+		return p({}, `The ${this.props.name} is ${this.props.color}`);
 	}
 });
