@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react/addons';
-import {Mixin} from 'isocortex';
+import {Mixin} from 'neocortex';
 
 const h4 = React.createFactory('h4');
 

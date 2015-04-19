@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react/addons';
-import {Mixin} from 'isocortex';
+import {Mixin} from 'neocortex';
 
 const div = React.createFactory('div');
 const Title = React.createFactory(require('./Title'));
