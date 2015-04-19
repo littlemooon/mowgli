@@ -67,12 +67,8 @@ Both state and actions can be defined in an arbitrary tree:
 const state = new State({
 	myNamespace: {
 		text: 'Get ready for the show...',
-		list: [
-			'3',
-			'2',
-			'1',
-			'BOOM'
-		]
+		list: ['3', '2', '1', 'BOOM']
+	}
 });
 ```
 
