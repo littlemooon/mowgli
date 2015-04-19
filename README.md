@@ -5,7 +5,7 @@
 ##### Thin React application layer framework around Cortex
 
 
-Set initial state within a single object:
+Set initial state with a single object:
 ```
 const state = new State({
 	text: 'Oh hey!'
@@ -30,11 +30,11 @@ const RootComponent = React.render(
 Rerender the application if the state object changes:
 ```
 state.on('update', function(data) {
-  RootComponent.setProps({state: data});
+	RootComponent.setProps({state: data});
 });
 ```
 
-Read application state by defining 'cursors' in your components:
+Read application state by declaratively defining 'cursors' in your components:
 ```
 React.createClass({
 	cursors: {
@@ -47,7 +47,7 @@ React.createClass({
 });
 ```
 
-Trigger updates by defining 'actions' in your components:
+Trigger updates by declaratively defining 'actions' in your components:
 ```
 React.createClass({
 	actions: {
@@ -66,7 +66,7 @@ React.createClass({
 });
 ```
 
-Both state and actions can be defined in an arbitrarily deep tree:
+Both state and actions can be defined in an arbitrary tree:
 ```
 const state = new State({
 	myNamespace: {
