@@ -1,18 +1,21 @@
 {
   "name": "simple-list-example",
   "version": "0.0.1",
-  "description": "super-glue Simple List",
-  "main": "src/index.coffee",
+  "description": "Simple list example for isocortex",
+  "main": "main.js",
   "scripts": {
     "start": "node webpack.server.js"
   },
   "dependencies": {
-    "ramda-extras": "0.0.2",
-    "super-glue": "*"
+    "isocortex": "*"
   },
   "devDependencies": {
-    "coffee-loader": "^0.7.2",
-    "coffee-script": "^1.9.1",
+    "babel-core": "^5.1.10",
+    "babel-loader": "^5.0.0",
+    "eslint": "^0.19.0",
+    "eslint-loader": "^0.10.0",
+    "react": "^0.13.1",
+    "react-hot-loader": "^1.2.5",
     "webpack": "^1.8.4",
     "webpack-dev-server": "^1.8.0"
   }

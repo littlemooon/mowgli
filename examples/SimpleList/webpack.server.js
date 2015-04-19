@@ -1,19 +1,19 @@
 'use strict';
 
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
+var webpack = require('webpack'),
+    WebpackDevServer = require('webpack-dev-server');
 
 var port = 9000;
 
 var config = {
   devServer: true,
-  devtool: 'sourcemap',
+  devtool: 'sourcemaps',
   debug: true,
 
   entry: [
     'webpack-dev-server/client?http://localhost:9000',
     'webpack/hot/only-dev-server',
-    './src/index.coffee'
+    './main.js'
   ],
 
   output: {
@@ -28,12 +28,20 @@ var config = {
   ],
 
   resolve: {
-    extensions: ['', '.js', '.coffee']
+    extensions: ['', '.js']
   },
 
   module: {
+    preLoaders: [
+      { test: /\.js$/, loader: 'eslint', exclude: /node_modules/ }
+    ],
+
     loaders: [
-      { test: /\.coffee$/, loaders: ['react-hot', 'coffee'], exclude: /node_modules/ }
+      { test: /\.js$/, loaders: ['react-hot', 'babel'], exclude: /node_modules/ }
+    ],
+
+    noParse: [
+      /node_modules\/cortex/
     ]
   }
 };
@@ -53,6 +61,6 @@ new WebpackDevServer(webpack(config), {
   }
 }).listen(port, 'localhost', function(err) {
   if (err) {
-    return console.error(err);
+    return console.log(err);
   }
 });
