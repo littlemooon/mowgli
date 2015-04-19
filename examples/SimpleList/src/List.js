@@ -14,7 +14,7 @@ export default React.createClass({
 	mixins: [Mixin],
 
 	cursors: {
-		items: ['list']
+		items: 'list'
 	},
 
 	render: function() {

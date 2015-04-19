@@ -10,8 +10,12 @@ export default React.createClass({
 
 	mixins: [Mixin],
 
+	actions: {
+		'create': 'list.add'
+	},
+
 	_handleClick: function() {
-		console.log('clicked');
+		this.actions.create('whoooo');
 	},
 
 	render: function() {

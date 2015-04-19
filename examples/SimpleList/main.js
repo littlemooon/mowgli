@@ -5,7 +5,8 @@ import {State} from 'isocortex';
 
 const App = React.createFactory(require('./src/App'));
 
-const exampleData = new State({
+// define initial data
+const initialData = new State({
 	title: {
 		text: 'Have some fruit!'
 	},
@@ -16,9 +17,20 @@ const exampleData = new State({
 	]
 });
 
-// render Root component wrapper and embed App component inside
-const RootComponent = React.render(App({state: exampleData}), document.body);
+// define actions on data
+const actions = {
+	list: {
+		add: x => console.log(x)
+	}
+};
 
-exampleData.on('update', function(data) {
+// render application passing in initial data and actions
+const RootComponent = React.render(
+	App({state: initialData, actions: actions}),
+	document.body
+);
+
+// watch for changes to the state and rerender the root component
+initialData.on('update', function(data) {
   RootComponent.setProps({state: data});
 });
