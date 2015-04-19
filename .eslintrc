@@ -9,11 +9,13 @@
     blockBindings: true,
     modules: true,
     objectLiteralShorthandProperties: true,
-    objectLiteralComputedProperties: true
+    objectLiteralComputedProperties: true,
+    classes: true
   },
   rules: {
     quotes: "single",
     no-underscore-dangle: false,
-    curly: [2, "multi-line"]
+    curly: [2, "multi-line"],
+    new-cap: false
   }
 }
