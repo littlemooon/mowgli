@@ -60,7 +60,5 @@ new WebpackDevServer(webpack(config), {
     chunkModules: false
   }
 }).listen(port, 'localhost', function(err) {
-  if (err) {
-    return console.log(err);
-  }
+  if (err) return console.log(err);
 });

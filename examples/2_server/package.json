@@ -1,0 +1,17 @@
+{
+  "name": "neocortex-server-example",
+  "version": "0.0.1",
+  "description": "Server neocortex example",
+  "main": "app/main.js",
+  "scripts": {
+    "start": "npm run client | npm run serve",
+    "client": "node webpackServer.js",
+    "serve": "node server.js"
+  },
+  "devDependencies": {
+    "react": "^0.12.2",
+    "react-hot-loader": "^1.1.4",
+    "webpack": "^1.5.3",
+    "webpack-dev-server": "^1.7.0"
+  }
+}

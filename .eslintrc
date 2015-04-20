@@ -16,6 +16,7 @@
     quotes: "single",
     no-underscore-dangle: false,
     curly: [2, "multi-line"],
-    new-cap: false
+    new-cap: false,
+    no-use-before-define: false
   }
 }

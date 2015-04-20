@@ -3,7 +3,7 @@
 import React from 'react/addons';
 import {State} from 'neocortex';
 
-const App = React.createFactory(require('./src/App'));
+const App = React.createFactory(require('./app/App'));
 
 // define initial data
 const state = new State({

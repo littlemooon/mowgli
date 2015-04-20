@@ -1,7 +1,7 @@
 {
-  "name": "neocortex-simple-list-example",
+  "name": "neocortex-simple-example",
   "version": "0.0.1",
-  "description": "Simple list example for neocortex",
+  "description": "Simple neocortex example",
   "main": "main.js",
   "scripts": {
     "start": "node webpack.server.js"
@@ -11,7 +11,7 @@
     "babel-loader": "^5.0.0",
     "eslint": "^0.19.0",
     "eslint-loader": "^0.10.0",
-    "react": "^0.13.1",
+    "react": "^0.12.2",
     "react-hot-loader": "^1.2.5",
     "webpack": "^1.8.4",
     "webpack-dev-server": "^1.8.0"
