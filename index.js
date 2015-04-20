@@ -2,10 +2,10 @@
 
 import State from './src/State';
 import Mixin from './src/Mixin';
-import RootComponent from './src/RootComponent';
+import RootMixin from './src/RootMixin';
 
 export default {
 	State,
 	Mixin,
-	RootComponent
+	RootMixin
 };

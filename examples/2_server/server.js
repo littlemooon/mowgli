@@ -1,5 +1,6 @@
 
 var express = require('express');
+var bodyParser = require('body-parser');
 
 // initialise data
 var list = [
@@ -17,21 +18,29 @@ app.get('/', function(req, res) {
   res.render('/index.html');
 });
 
+app.all('/*', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:9000');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Credentials', true);
+  next();
+});
+app.use(bodyParser.json());
+
 // setup entry points
 app.get('/api/list', getList);
-app.put('/api/list', addToList);
+app.post('/api/list', addToList);
 
 // request list
-var getList = function(req, res) {
+function getList(req, res) {
 	// create artificial loading time
-	setTimeout(3000);
-
-	// return the list
-	res.send(list);
-};
+	setTimeout(function() {
+		// return the list
+		res.send(list);
+	}, 3000);
+}
 
 // add an entry to the list
-var addToList = function(req, res) {
+function addToList(req, res) {
 	var newEntry = req.body;
 
 	// update server data
@@ -39,7 +48,7 @@ var addToList = function(req, res) {
 
 	// inform the client
 	res.send(newEntry);
-};
+}
 
 // start server
 var server = app.listen(3000, function () {

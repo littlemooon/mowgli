@@ -31,6 +31,7 @@ const RootComponent = React.render(
 );
 
 // watch for changes to the state and rerender the root component
+// TODO: Cortex does not support nested events
 state.on('update', function(data) {
   RootComponent.setProps({state: data});
 });

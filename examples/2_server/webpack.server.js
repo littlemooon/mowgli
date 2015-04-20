@@ -13,7 +13,7 @@ var config = {
   entry: [
     'webpack-dev-server/client?http://localhost:' + port,
     'webpack/hot/only-dev-server',
-    './app/main.js'
+    './main.js'
   ],
 
   output: {
@@ -47,10 +47,17 @@ var config = {
 };
 
 new WebpackDevServer(webpack(config), {
-  contentBase: 'http://localhost:' + port,
   publicPath: config.output.publicPath,
-  noInfo: true,
-  hot: true
+  hot: true,
+  stats: {
+    assets: false,
+    colors: false,
+    version: false,
+    hash: false,
+    timings: false,
+    chunks: false,
+    chunkModules: false
+  }
 }).listen(port, 'localhost', function (err) {
   if (err) console.log(err);
 });

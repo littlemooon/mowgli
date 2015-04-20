@@ -21,6 +21,7 @@ export default {
 		this._subscriptions = this._getSubscriptions(this, cursors);
 
 		// subscribe to the update event for each cursor
+		// TODO: Cortex does not support nested events
 		// this._subscriptions.forEach(this._subscribe__).bind(this);
 
 		// add the declared actions to the component
@@ -30,30 +31,35 @@ export default {
 		this.setState(cursors);
 	},
 
-	componentWillUpdate: function(p, s) {
-		console.log('cwu');
-		console.log(p);
-		console.log(s);
-	},
-	componentDidUpdate: function(p, s) {
-		console.log('cdu');
-		console.log(p);
-		console.log(s);
+	componentWillUpdate: function() {
+		// get a map of current cursors pointing to subsets of the state
+		const cursors = this._getCursors(this.cursors, this.context && this.context.state);
+
+		// update state if values have changed
+		if (this._hasChanged(cursors, this.state)) this.setState(cursors);
 	},
 
 	componentWillUnmount: function() {
 		// unsubscribe from all changes to the state
+		// TODO: Cortex does not support nested events
 		// this._subscriptions.forEach(this._unsubscribe__).bind(this);
 	},
 
 	// get a map of cursors pointing to subsets of the state
 	_getCursors: function(declaredCursors, state) {
-		return this.__getNestedObjectForEachKey(declaredCursors, state, 'Cursor');
+		return this._getNestedObjectForEachKey(declaredCursors, state, 'Cursor');
 	},
 
 	// get a map of actions pointing to actions in the context
 	_getActions: function(declaredActions, actions) {
-		return this.__getNestedObjectForEachKey(declaredActions, actions, 'Action');
+		return this._getNestedObjectForEachKey(declaredActions, actions, 'Action');
+	},
+
+	// determine whether any cursor values have changed
+	_hasChanged: function(cursors, prevState) {
+		return Object.keys(cursors).reduce((acc, key) => {
+			return acc || prevState[key].val() !== cursors[key].val();
+		}, false);
 	},
 
 	// get an array of all subscriptions to apply
@@ -79,20 +85,20 @@ export default {
 	},
 
 	// get a map of each key to the subtree identified by the path value
-	__getNestedObjectForEachKey: function(keyObj, treeObj, errorDesc) {
+	_getNestedObjectForEachKey: function(keyObj, treeObj, errorDesc) {
 		// check yourself
 		if (!keyObj) return {};
 		if (!treeObj) throw new Error(`No ${errorDesc}s have been passed to your root component`);
 
 		// return a map of keys to nested object
 		return Object.keys(keyObj).reduce((acc, key) => {
-			acc[key] = this.__getNestedObjectFromPath(keyObj[key], treeObj, errorDesc);
+			acc[key] = this._getNestedObjectFromPath(keyObj[key], treeObj, errorDesc);
 			return acc;
 		}, {});
 	},
 
 	// return the subtree identified by following the given path
-	__getNestedObjectFromPath: function(path, treeObj, errorDesc) {
+	_getNestedObjectFromPath: function(path, treeObj, errorDesc) {
 		// split path into an array
 		const pathArray = path.constructor === Array ? path : path.split('.');
 

@@ -3,10 +3,10 @@
 import React from 'react/addons';
 import {Mixin} from 'neocortex';
 
-const h4 = React.createFactory('h4');
 const div = React.createFactory('div');
-const button = React.createFactory('button');
+const Title = React.createFactory(require('./Title'));
 const ListItem = React.createFactory(require('./ListItem'));
+const Button = React.createFactory(require('./Button'));
 
 export default React.createClass({
 	displayName: 'List',
@@ -25,39 +25,5 @@ export default React.createClass({
 			),
 			Button()
 		);
-	}
-});
-
-const Button = React.createClass({
-	displayName: 'Button',
-
-	mixins: [Mixin],
-
-	actions: {
-		'add': 'list.create'
-	},
-
-	_handleClick: function() {
-		this.actions.add();
-	},
-
-	render: function() {
-		return button({
-			onClick: this._handleClick
-		}, 'Add');
-	}
-});
-
-const Title = React.createClass({
-	displayName: 'Title',
-
-	mixins: [Mixin],
-
-	cursors: {
-		text: 'title.text'
-	},
-
-	render: function() {
-		return h4({}, this.state.text.val());
 	}
 });
