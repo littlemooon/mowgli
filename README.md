@@ -54,7 +54,7 @@ An actions object should be created to define interactions with the tree. This w
 Define actions that interact with the tree:
 ```javascript
 const actions = {
-	setText: (val) => tree.text.set(val)
+	setText: (val) => tree.namespace.text.set(val)
 };
 ```
 
@@ -75,7 +75,7 @@ React.createClass({
 
 	render: function() {
 		return button({
-			onClick: this.actions.updateText('I am mowgli Jim')
+			onClick: this.actions.updateText('I am jungle Jim')
 		}, 'Update the text');
 	}
 });
@@ -86,11 +86,11 @@ Perform any server calls from within an action:
 const actions = {
   list: {
     get: () => {
-      tree.list.loading.set('true');
+      tree.namespace.list.loading.set('true');
       service.get()
         .then(res => {
-          tree.list.value.set(res.body);
-          tree.list.loading.set('false');
+          tree.namespace.list.value.set(res.body);
+          tree.namespace.list.loading.set('false');
         });
     }
   }
