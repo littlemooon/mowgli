@@ -1,7 +1,7 @@
 {
   "name": "mowgli",
   "version": "0.0.1",
-  "description": "Thin React application layer around Cortex",
+  "description": "Thin React application layer for interacting with a single tree of state",
   "main": "index.js",
   "scripts": {
     "start": "webpack --progress --colors --watch"
