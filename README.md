@@ -42,7 +42,7 @@ React.createClass({
 	},
 
 	render: function() {
-		return p({}, this.state.theText.val());
+		return p({}, this.state.theText);
 	}
 });
 ```
@@ -82,8 +82,8 @@ React.createClass({
 
 	render: function() {
 		return div({},
-			h3({}, this.state.theText.val()),
-			this.state.theList.val().map((item, i) =>
+			h3({}, this.state.theText),
+			this.state.theList.map((item, i) =>
 				p({}, item)
 			),
 		);
