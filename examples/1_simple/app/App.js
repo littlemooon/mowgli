@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react/addons';
-import {RootMixin} from 'neocortex';
+import {RootMixin} from 'jungle';
 
 const List = React.createFactory(require('./List'));
 

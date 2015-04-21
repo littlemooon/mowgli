@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react/addons';
-import {State} from 'neocortex';
+import {State} from 'jungle';
 
 const App = React.createFactory(require('./app/App'));
 

@@ -1,5 +1,5 @@
 
-# neocortex
+# jungle
 
 
 ##### Thin React application layer framework around Cortex

@@ -7,7 +7,7 @@ module.exports = {
 
   output: {
     path: __dirname,
-    filename: 'neocortex.js'
+    filename: 'jungle.js'
   },
 
   resolve: {

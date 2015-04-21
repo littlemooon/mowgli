@@ -1,7 +1,7 @@
 {
-  "name": "neocortex-server-example",
+  "name": "jungle-server-example",
   "version": "0.0.1",
-  "description": "Server neocortex example",
+  "description": "Server jungle example",
   "main": "main.js",
   "scripts": {
     "start": "npm run client | npm run serve",

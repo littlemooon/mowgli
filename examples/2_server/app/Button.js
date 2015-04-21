@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react/addons';
-import {Mixin} from 'neocortex';
+import {Mixin} from 'jungle';
 
 const button = React.createFactory('button');
 

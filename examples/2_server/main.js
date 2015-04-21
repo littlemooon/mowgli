@@ -3,7 +3,7 @@
 
 import React from 'react/addons';
 import request from 'blueagent';
-import {State} from 'neocortex';
+import {State} from 'jungle';
 
 const App = React.createFactory(require('./app/App'));
 
