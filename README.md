@@ -32,6 +32,7 @@ const RootComponent = React.render(
 	App({tree: tree}),
 	document.body
 );
+```
 
 Read the application state by declaratively defining paths through the tree in your components. The data will be added to the component state using the name you provide in the 'data' object:
 ```javascript
