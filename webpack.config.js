@@ -7,7 +7,7 @@ module.exports = {
 
   output: {
     path: __dirname,
-    filename: 'jungle.js'
+    filename: 'mowgli.js'
   },
 
   resolve: {

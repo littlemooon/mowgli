@@ -2,7 +2,7 @@
 'use strict';
 
 import React from 'react/addons';
-import {Mixin} from 'jungle';
+import {Mixin} from 'mowgli';
 
 const h4 = React.createFactory('h4');
 

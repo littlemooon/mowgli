@@ -1,7 +1,7 @@
 {
-  "name": "jungle-simple-example",
+  "name": "mowgli-simple-example",
   "version": "0.0.1",
-  "description": "Simple jungle example",
+  "description": "Simple mowgli example",
   "main": "main.js",
   "scripts": {
     "start": "node webpack.server.js"

@@ -1,5 +1,5 @@
 
-# jungle
+# mowgli
 
 
 ##### Thin React application layer framework around Cortex
@@ -56,7 +56,7 @@ React.createClass({
 
 	render: function() {
 		return button({
-			onClick: this.actions.updateText('I am jungle Jim')
+			onClick: this.actions.updateText('I am mowgli Jim')
 		}, 'Update the text');
 	}
 });

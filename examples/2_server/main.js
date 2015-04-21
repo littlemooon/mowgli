@@ -3,7 +3,7 @@
 
 import React from 'react/addons';
 import request from 'blueagent';
-import {State} from 'jungle';
+import {State} from 'mowgli';
 
 const App = React.createFactory(require('./app/App'));
 
