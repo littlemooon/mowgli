@@ -15,11 +15,11 @@ export default {
 
 	componentWillMount: function() {
 		const tree = this.context && this.context.tree;
-		const cursorDefs = this.cursors;
+		const cursorDefs = this.data;
 		const actions = this.context && this.context.actions;
 		const actionDefs = this.actions;
 
-		// get a map of initial cursors pointing to subsets of the state
+		// get a map of initial cursors pointing to subsets of the tree
 		const cursors = this._getCursors(cursorDefs, tree);
 
 		// get an array of subscriptions to be applied
@@ -39,7 +39,7 @@ export default {
 
 	componentWillReceiveProps: function() {
 		const tree = this.context = this.context.tree;
-		const cursorDefs = this.cursors;
+		const cursorDefs = this.data;
 
 		// update cursor values
 		const cursorValues = this._getCursorValues(this._getCursors(cursorDefs, tree));
@@ -47,12 +47,12 @@ export default {
 	},
 
 	componentWillUnmount: function() {
-		// unsubscribe from all changes to the state
+		// unsubscribe from all changes to the tree
 		// TODO: Cortex does not support nested events
 		// this._subscriptions.forEach(this._unsubscribe__).bind(this);
 	},
 
-	// get a map of cursors pointing to subsets of the state
+	// get a map of cursors pointing to subsets of the tree
 	_getCursors: function(declaredCursors, tree) {
 		return this._getNestedObjectForEachKey(declaredCursors, tree, 'Cursor');
 	},
@@ -75,7 +75,7 @@ export default {
 		// do not subscribe to anything on the server (rerender from root)
 		if (!isBrowser) return [];
 
-		// return an array of subscription functions that update state on change
+		// return an array of subscription functions that update tree on change
 		return Object.keys(cursors).map(key => ({
 			cursor: cursors[key],
 			subscribe: () => component.setState({[key]: cursors[key]})

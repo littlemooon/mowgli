@@ -5,39 +5,39 @@
 ##### Thin React application layer framework around Cortex
 
 
-Set initial state with a single object:
+Tree initialised with a single JS object:
 ```
-const state = new State({
+const tree = new Tree({
 	text: 'Oh hey!'
 });
 ```
 
-Define actions that interact with the state:
+Define actions that interact with the tree:
 ```
 const actions = {
 	setText: (val) => state.text.set(val)
 };
 ```
 
-Render your application passing in the state and actions:
+Render your application passing in the tree and the actions:
 ```
 const RootComponent = React.render(
-	App({state: state, actions: actions}),
+	App({tree: tree, actions: actions}),
 	document.body
 );
 ```
 
-Rerender the application if the state object changes:
+Re-render the application if the tree changes:
 ```
-state.on('update', function(data) {
-	RootComponent.setProps({state: data});
+tree.on('update', function(data) {
+	RootComponent.setProps({tree: data});
 });
 ```
 
-Read application state by declaratively defining 'cursors' in your components:
+Read the tree by declaratively defining 'data' in your components:
 ```
 React.createClass({
-	cursors: {
+	data: {
 		theText: 'text'
 	},
 
@@ -62,9 +62,9 @@ React.createClass({
 });
 ```
 
-Both state and actions can be defined in an arbitrary tree:
+Both the tree and the actions can be defined in an arbitrary object structure:
 ```
-const state = new State({
+const tree = new Tree({
 	myNamespace: {
 		text: 'Get ready for the show...',
 		list: ['3', '2', '1', 'BOOM']
@@ -75,7 +75,7 @@ const state = new State({
 And accessed via an array or fullstop separated string:
 ```
 React.createClass({
-	cursors: {
+	data: {
 		theText: 'myNamespace.text',
 		theList: ['myNamespace', 'list']
 	},

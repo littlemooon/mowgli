@@ -11,7 +11,7 @@ export default React.createClass({
 
 	mixins: [Mixin],
 
-	cursors: {
+	data: {
 		text: 'title.text'
 	},
 

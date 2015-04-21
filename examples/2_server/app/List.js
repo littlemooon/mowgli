@@ -14,7 +14,7 @@ export default React.createClass({
 
 	mixins: [Mixin],
 
-	cursors: {
+	data: {
 		items: 'list.value',
 		isLoading: 'list.loading'
 	},

@@ -1,12 +1,12 @@
 'use strict';
 
 import React from 'react/addons';
-import {State} from 'mowgli';
+import {Tree} from 'mowgli';
 
 const App = React.createFactory(require('./app/App'));
 
 // define initial data
-const tree = new State({
+const tree = new Tree({
 	title: {
 		text: 'Have some fruit!'
 	},
@@ -30,7 +30,7 @@ const RootComponent = React.render(
 	document.body
 );
 
-// watch for changes to the state and rerender the root component
+// watch for changes to the tree and rerender the root component
 // TODO: Cortex does not support nested events
 tree.on('update', function(newTree) {
   RootComponent.setProps({tree: newTree});

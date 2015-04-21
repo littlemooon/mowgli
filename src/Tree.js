@@ -2,4 +2,4 @@
 
 import Cortex from 'cortexjs';
 
-export default class State extends Cortex {}
+export default class Tree extends Cortex {}
