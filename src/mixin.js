@@ -1,7 +1,6 @@
 'use strict';
 
-import React from 'react/addons';
-import {clone} from 'ramda';
+import React, {PureRenderMixin} from 'react/addons';
 
 // know if we are on the client or the server
 const isBrowser = !(global && Object.prototype.toString.call(global.process) === '[object process]');
@@ -11,6 +10,8 @@ export default {
 		tree: React.PropTypes.object,
 		actions: React.PropTypes.object
 	},
+
+	mixins: [PureRenderMixin],
 
 	componentWillMount: function() {
 		const tree = this.context && this.context.tree;
@@ -32,8 +33,8 @@ export default {
 		this.actions = this._getActions(actionDefs, actions);
 
 		// add the cursor values to the component state
-		this._cursorValues = this._getCursorValues(cursors);
-		this.setState(this._cursorValues);
+		const cursorValues = this._getCursorValues(cursors);
+		this.setState(cursorValues);
 	},
 
 	componentWillReceiveProps: function() {
@@ -43,18 +44,6 @@ export default {
 		// update cursor values
 		const cursorValues = this._getCursorValues(this._getCursors(cursorDefs, tree));
 		this.setState(cursorValues);
-	},
-
-	shouldComponentUpdate: function() {
-		const cursorValues = this.state;
-		const prevCursorValues = this._cursorValues;
-
-		// determine whether the cursor values have changed
-		const changed = this._shallowDiff(cursorValues, prevCursorValues);
-
-		// update state if values have changed
-		if (changed) this._cursorValues = clone(cursorValues);
-		return changed;
 	},
 
 	componentWillUnmount: function() {
