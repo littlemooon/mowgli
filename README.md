@@ -1,44 +1,43 @@
 
-# mowgli
+# The Tree
 
+The tree is a single immutable object that stores the entire state of the application. It is conceptually equivalent to the atom in Om and related frameworks.
 
-##### Thin React application layer framework around Cortex
-
-
-Tree initialised with a single JS object:
-```
+Initialise with a single JS object:
+```javascript
 const tree = new Tree({
-	text: 'Oh hey!'
+	namespace: {
+		text: 'Get ready for the show...',
+		list: ['3', '2', '1', 'BOOM']
+	}
 });
 ```
 
-Define actions that interact with the tree:
-```
-const actions = {
-	setText: (val) => state.text.set(val)
-};
+Make sure the root component implements the RootComponentMixin:
+```javascript
+import {RootComponentMixin} from 'mowgli';
+
+const App = React.createClass({
+	mixins: [RootComponentMixin],
+
+	render: function() {
+		return ...;
+	}
+});
 ```
 
-Render your application passing in the tree and the actions:
-```
+Then pass the whole tree into the root component as a prop:
+```javascript
 const RootComponent = React.render(
-	App({tree: tree, actions: actions}),
+	App({tree: tree}),
 	document.body
 );
-```
 
-Re-render the application if the tree changes:
-```
-tree.on('update', function(data) {
-	RootComponent.setProps({tree: data});
-});
-```
-
-Read the tree by declaratively defining 'data' in your components:
-```
+Read the application state by declaratively defining paths through the tree in your components. The data will be added to the component state using the name you provide in the 'data' object:
+```javascript
 React.createClass({
 	data: {
-		theText: 'text'
+		theText: 'namespace.text'
 	},
 
 	render: function() {
@@ -47,8 +46,27 @@ React.createClass({
 });
 ```
 
-Trigger updates by declaratively defining 'actions' in your components:
+# Actions
+
+An actions object should be created to define interactions with the tree. This will be the only means of interacting with the application state to ensure a unidirectional data flow.
+
+Define actions that interact with the tree:
+```javascript
+const actions = {
+	setText: (val) => tree.text.set(val)
+};
 ```
+
+Pass the actions into the root component:
+```javascript
+const RootComponent = React.render(
+	App({tree: tree, actions: actions}),
+	document.body
+);
+```
+
+Access actions by declaratively defining paths through the actions object in your components. The functions will be added to the 'actions' object using the name you provide in the 'actions' config object:
+```javascript
 React.createClass({
 	actions: {
 		'updateText': 'setText'
@@ -62,31 +80,18 @@ React.createClass({
 });
 ```
 
-Both the tree and the actions can be defined in an arbitrary object structure:
-```
-const tree = new Tree({
-	myNamespace: {
-		text: 'Get ready for the show...',
-		list: ['3', '2', '1', 'BOOM']
-	}
-});
-```
-
-And accessed via an array or fullstop separated string:
-```
-React.createClass({
-	data: {
-		theText: 'myNamespace.text',
-		theList: ['myNamespace', 'list']
-	},
-
-	render: function() {
-		return div({},
-			h3({}, this.state.theText),
-			this.state.theList.map((item, i) =>
-				p({}, item)
-			),
-		);
-	}
-});
+Perform any server calls from within an action:
+```javascript
+const actions = {
+  list: {
+    get: () => {
+      tree.list.loading.set('true');
+      service.get()
+        .then(res => {
+          tree.list.value.set(res.body);
+          tree.list.loading.set('false');
+        });
+    }
+  }
+};
 ```
