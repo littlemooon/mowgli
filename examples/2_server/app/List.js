@@ -28,10 +28,10 @@ export default React.createClass({
 	},
 
 	_renderList: function() {
-		if (this.state.isLoading.val() === 'true') return p({}, 'Loading...');
+		if (this.state.isLoading === 'true') return p({}, 'Loading..');
 
 		return div({},
-			this.state.items.val().map((item, i) =>
+			this.state.items.map((item, i) =>
 				ListItem({key: i, name: item.name, color: item.color})
 			),
 			Button()

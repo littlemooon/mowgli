@@ -1,21 +1,25 @@
 'use strict';
 
 import React from 'react/addons';
+import {clone} from 'ramda';
 
 // know if we are on the client or the server
 const isBrowser = !(global && Object.prototype.toString.call(global.process) === '[object process]');
 
 export default {
 	contextTypes: {
-		state: React.PropTypes.object,
+		tree: React.PropTypes.object,
 		actions: React.PropTypes.object
 	},
 
 	componentWillMount: function() {
-		const c = this.context;
+		const tree = this.context && this.context.tree;
+		const cursorDefs = this.cursors;
+		const actions = this.context && this.context.actions;
+		const actionDefs = this.actions;
 
 		// get a map of initial cursors pointing to subsets of the state
-		const cursors = this._getCursors(this.cursors, c && c.state);
+		const cursors = this._getCursors(cursorDefs, tree);
 
 		// get an array of subscriptions to be applied
 		this._subscriptions = this._getSubscriptions(this, cursors);
@@ -25,18 +29,32 @@ export default {
 		// this._subscriptions.forEach(this._subscribe__).bind(this);
 
 		// add the declared actions to the component
-		this.actions = this._getActions(this.actions, c && c.actions);
+		this.actions = this._getActions(actionDefs, actions);
 
-		// add the cursors to the component state
-		this.setState(cursors);
+		// add the cursor values to the component state
+		this._cursorValues = this._getCursorValues(cursors);
+		this.setState(this._cursorValues);
 	},
 
-	componentWillUpdate: function() {
-		// get a map of current cursors pointing to subsets of the state
-		const cursors = this._getCursors(this.cursors, this.context && this.context.state);
+	componentWillReceiveProps: function() {
+		const tree = this.context = this.context.tree;
+		const cursorDefs = this.cursors;
+
+		// update cursor values
+		const cursorValues = this._getCursorValues(this._getCursors(cursorDefs, tree));
+		this.setState(cursorValues);
+	},
+
+	shouldComponentUpdate: function() {
+		const cursorValues = this.state;
+		const prevCursorValues = this._cursorValues;
+
+		// determine whether the cursor values have changed
+		const changed = this._shallowDiff(cursorValues, prevCursorValues);
 
 		// update state if values have changed
-		if (this._hasChanged(cursors, this.state)) this.setState(cursors);
+		if (changed) this._cursorValues = clone(cursorValues);
+		return changed;
 	},
 
 	componentWillUnmount: function() {
@@ -46,8 +64,16 @@ export default {
 	},
 
 	// get a map of cursors pointing to subsets of the state
-	_getCursors: function(declaredCursors, state) {
-		return this._getNestedObjectForEachKey(declaredCursors, state, 'Cursor');
+	_getCursors: function(declaredCursors, tree) {
+		return this._getNestedObjectForEachKey(declaredCursors, tree, 'Cursor');
+	},
+
+	// get a map of cursor values
+	_getCursorValues: function(cursors) {
+		return Object.keys(cursors).reduce((acc, key) => {
+			acc[key] = cursors[key].val();
+			return acc;
+		}, {});
 	},
 
 	// get a map of actions pointing to actions in the context
@@ -55,10 +81,10 @@ export default {
 		return this._getNestedObjectForEachKey(declaredActions, actions, 'Action');
 	},
 
-	// determine whether any cursor values have changed
-	_hasChanged: function(cursors, prevState) {
-		return Object.keys(cursors).reduce((acc, key) => {
-			return acc || prevState[key].val() !== cursors[key].val();
+	// determine whether any object values have changed
+	_shallowDiff: function(obj, otherObj) {
+		return Object.keys(obj).reduce((acc, key) => {
+			return acc || obj[key] !== otherObj[key];
 		}, false);
 	},
 

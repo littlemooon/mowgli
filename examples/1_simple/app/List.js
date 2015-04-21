@@ -20,7 +20,7 @@ export default React.createClass({
 	render: function() {
 		return div({},
 			Title(),
-			this.state.items.val().map((item, i) =>
+			this.state.items.map((item, i) =>
 				ListItem({key: i, name: item.name, color: item.color})
 			),
 			Button()

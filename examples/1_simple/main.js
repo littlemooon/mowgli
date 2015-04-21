@@ -6,7 +6,7 @@ import {State} from 'neocortex';
 const App = React.createFactory(require('./app/App'));
 
 // define initial data
-const state = new State({
+const tree = new State({
 	title: {
 		text: 'Have some fruit!'
 	},
@@ -20,18 +20,18 @@ const state = new State({
 // define actions on data
 const actions = {
 	list: {
-		create: () => state.list.push({name: 'Grape', color: 'Purple'})
+		create: () => tree.list.push({name: 'Grape', color: 'Purple'})
 	}
 };
 
 // render application passing in initial data and actions
 const RootComponent = React.render(
-	App({state: state, actions: actions}),
+	App({tree: tree, actions: actions}),
 	document.body
 );
 
 // watch for changes to the state and rerender the root component
 // TODO: Cortex does not support nested events
-state.on('update', function(data) {
-  RootComponent.setProps({state: data});
+tree.on('update', function(newTree) {
+  RootComponent.setProps({tree: newTree});
 });

@@ -4,18 +4,18 @@ import React from 'react/addons';
 
 export default {
 	propTypes: {
-		state: React.PropTypes.object.isRequired,
+		tree: React.PropTypes.object.isRequired,
 		actions: React.PropTypes.object
 	},
 
 	childContextTypes: {
-		state: React.PropTypes.object,
+		tree: React.PropTypes.object,
 		actions: React.PropTypes.object
 	},
 
 	getChildContext: function() {
 		return {
-			state: this.props.state,
+			tree: this.props.tree,
 			actions: this.props.actions
 		};
 	}
