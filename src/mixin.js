@@ -70,13 +70,6 @@ export default {
 		return this._getNestedObjectForEachKey(declaredActions, actions, 'Action');
 	},
 
-	// determine whether any object values have changed
-	_shallowDiff: function(obj, otherObj) {
-		return Object.keys(obj).reduce((acc, key) => {
-			return acc || obj[key] !== otherObj[key];
-		}, false);
-	},
-
 	// get an array of all subscriptions to apply
 	_getSubscriptions: function(component, cursors) {
 		// do not subscribe to anything on the server (rerender from root)
