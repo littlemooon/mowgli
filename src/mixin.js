@@ -30,8 +30,8 @@ export default {
 		this._subscriptions = this._getSubscriptions(this, cursors);
 
 		// subscribe to the update event for each cursor
-		// TODO: Cortex does not support nested events
-		// this._subscriptions.forEach(this._subscribe__).bind(this);
+		const subscribe = s => cursorFns.on && cursorFns.on(s.cursor, s.subscribe);
+		this._subscriptions.forEach(subscribe);
 
 		// add the declared actions to the component
 		this.actions = this._getActions(actionDefs, actions);
@@ -52,8 +52,8 @@ export default {
 
 	componentWillUnmount: function() {
 		// unsubscribe from all changes to the tree
-		// TODO: Cortex does not support nested events
-		// this._subscriptions.forEach(this._unsubscribe__).bind(this);
+		const unsubscribe = s => cursorFns.off && cursorFns.off(s.cursor, s.subscribe);
+		this._subscriptions.forEach(unsubscribe);
 	},
 
 	// get a map of cursors pointing to subsets of the tree
@@ -79,17 +79,7 @@ export default {
 		// return an array of subscription functions that update tree on change
 		return Object.keys(cursors).map(key => ({
 			cursor: cursors[key],
-			subscribe: () => component.setState({[key]: cursors[key]})
+			subscribe: () => component.setState({[key]: cursorFns.value(cursors[key])})
 		}));
-	},
-
-	// bind update event on cursor to subscription function
-	_subscribe__: function(subscription) {
-		cursorFns.on(subscription.subscribe);
-	},
-
-	// remove the bound update event from the cursor
-	_unsubscribe__: function(subscription) {
-		cursorFns.on(subscription.subscribe);
 	}
 };

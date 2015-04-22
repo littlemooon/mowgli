@@ -1,7 +1,7 @@
 {
-  "name": "mowgli-simple-example",
+  "name": "mowgli-baobab-example",
   "version": "0.0.1",
-  "description": "Simple Mowgli example",
+  "description": "Baobab Mowgli example",
   "main": "main.js",
   "scripts": {
     "start": "node webpack.server.js"
@@ -15,5 +15,8 @@
     "react-hot-loader": "^1.2.5",
     "webpack": "^1.8.4",
     "webpack-dev-server": "^1.8.0"
+  },
+  "dependencies": {
+    "baobab": "^1.0.1"
   }
 }

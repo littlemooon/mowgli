@@ -15,12 +15,12 @@ const tree = {
 };
 ```
 
-Make sure the root component implements the RootComponentMixin:
+Make sure the root component implements the RootMixin:
 ```javascript
-import {RootComponentMixin} from 'mowgli';
+import {RootMixin} from 'mowgli';
 
 const App = React.createClass({
-	mixins: [RootComponentMixin],
+	mixins: [RootMixin],
 
 	render: function() {
 		return ...;

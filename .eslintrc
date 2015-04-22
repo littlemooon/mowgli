@@ -17,6 +17,7 @@
     no-underscore-dangle: false,
     curly: [2, "multi-line"],
     new-cap: false,
-    no-use-before-define: false
+    no-use-before-define: false,
+    no-unused-expressions: false
   }
 }

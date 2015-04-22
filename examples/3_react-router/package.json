@@ -1,7 +1,7 @@
 {
-  "name": "mowgli-simple-example",
+  "name": "mowgli-router-example",
   "version": "0.0.1",
-  "description": "Simple Mowgli example",
+  "description": "React-Router Mowgli example",
   "main": "main.js",
   "scripts": {
     "start": "node webpack.server.js"
@@ -15,5 +15,9 @@
     "react-hot-loader": "^1.2.5",
     "webpack": "^1.8.4",
     "webpack-dev-server": "^1.8.0"
+  },
+  "dependencies": {
+    "react": "^0.13.2",
+    "react-router": "^0.13.2"
   }
 }

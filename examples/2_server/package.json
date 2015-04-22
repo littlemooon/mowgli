@@ -1,7 +1,7 @@
 {
   "name": "mowgli-server-example",
   "version": "0.0.1",
-  "description": "Server mowgli example",
+  "description": "Server Mowgli example",
   "main": "main.js",
   "scripts": {
     "start": "npm run client | npm run serve",
