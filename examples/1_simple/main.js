@@ -1,12 +1,11 @@
 'use strict';
 
 import React from 'react/addons';
-import {Tree} from 'mowgli';
 
 const App = React.createFactory(require('./app/App'));
 
 // define initial data
-const tree = new Tree({
+const tree = {
 	title: {
 		text: 'Have some fruit!'
 	},
@@ -15,12 +14,15 @@ const tree = new Tree({
 		{name: 'Orange', color: 'Orange'},
 		{name: 'Banana', color: 'Yellow'}
 	]
-});
+};
 
 // define actions on data
 const actions = {
 	list: {
-		create: () => tree.list.push({name: 'Grape', color: 'Purple'})
+		create: () => {
+			tree.list.push({name: 'Grape', color: 'Purple'});
+			reRender();
+		}
 	}
 };
 
@@ -30,8 +32,6 @@ const RootComponent = React.render(
 	document.body
 );
 
-// watch for changes to the tree and rerender the root component
-// TODO: Cortex does not support nested events
-tree.on('update', function(newTree) {
-  RootComponent.setProps({tree: newTree});
-});
+function reRender() {
+  RootComponent.setProps({tree: tree});
+}
