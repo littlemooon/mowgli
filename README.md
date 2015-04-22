@@ -1,16 +1,18 @@
 
 # The Tree
 
-The tree is a single immutable object that stores the entire state of the application. It is conceptually equivalent to the atom in Om and related frameworks.
+The tree is a single object that stores the entire state of the application. It is conceptually similar to the atom in Om and related frameworks.
 
-Initialise with a single JS object:
+Mowgli is tree implementation agnostic and currently supports Cortex, Baobab, Immstruct, React-Cursor and JSON.
+
+Initialise the tree as a single piece of JSON to get started:
 ```javascript
-const tree = new Tree({
+const tree = {
 	namespace: {
 		text: 'Get ready for the show...',
 		list: ['3', '2', '1', 'BOOM']
 	}
-});
+};
 ```
 
 Make sure the root component implements the RootComponentMixin:
@@ -36,7 +38,11 @@ const RootComponent = React.render(
 
 Read the application state by declaratively defining paths through the tree in your components. The data will be added to the component state using the name you provide in the 'data' object:
 ```javascript
-React.createClass({
+import {Mixin} from 'mowgli';
+
+const Component = React.createClass({
+	mixins: [Mixin],
+
 	data: {
 		theText: 'namespace.text'
 	},
@@ -51,10 +57,12 @@ React.createClass({
 
 An actions object should be created to define interactions with the tree. This will be the only means of interacting with the application state to ensure a unidirectional data flow.
 
-Define actions that interact with the tree:
+Define actions that interact with the tree. Remember to trigger a rerender of the application by passing the updated tree into the root component:
 ```javascript
 const actions = {
-	setText: (val) => tree.namespace.text.set(val)
+	setText: (val) => {
+		tree.namespace.text.set = val;
+		RootComponent.setProps({tree: tree});
 };
 ```
 
@@ -68,7 +76,11 @@ const RootComponent = React.render(
 
 Access actions by declaratively defining paths through the actions object in your components. The functions will be added to the 'actions' object using the name you provide in the 'actions' config object:
 ```javascript
-React.createClass({
+import {Mixin} from 'mowgli';
+
+const Component = React.createClass({
+	mixins: [Mixin],
+
 	actions: {
 		'updateText': 'setText'
 	},
@@ -86,11 +98,11 @@ Perform any server calls from within an action:
 const actions = {
   list: {
     get: () => {
-      tree.namespace.list.loading.set('true');
       service.get()
         .then(res => {
-          tree.namespace.list.value.set(res.body);
-          tree.namespace.list.loading.set('false');
+          tree.namespace.list.value = res.body;
+          tree.namespace.list.loading = false;
+          RootComponent.setProps({tree: tree});
         });
     }
   }

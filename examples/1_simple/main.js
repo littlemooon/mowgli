@@ -5,7 +5,7 @@ import React from 'react/addons';
 const App = React.createFactory(require('./app/App'));
 
 // define initial data
-const tree = {
+let tree = {
 	title: {
 		text: 'Have some fruit!'
 	},

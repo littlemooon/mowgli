@@ -1,32 +1,30 @@
-
 'use strict';
 
 import React from 'react/addons';
 import request from 'blueagent';
-import {Tree} from 'mowgli';
 
 const App = React.createFactory(require('./app/App'));
 
 // define initial data
-const tree = new Tree({
+let tree = {
   title: {
     text: 'Have some fruit!'
   },
   list: {
     value: [],
-    loading: false
+    loading: true
   }
-});
+};
 
 // define actions on data
 const actions = {
   list: {
     get: () => {
-      tree.list.loading.set('true');
       request.get('http://localhost:3000/api/list')
         .then(res => {
-          tree.list.value.set(res.body);
-          tree.list.loading.set('false');
+          tree.list.value = res.body;
+          tree.list.loading = false;
+          reRender();
         })
         .catch(err => console.log('get failed', err));
     },
@@ -34,7 +32,10 @@ const actions = {
       request.post('http://localhost:3000/api/list')
         .send(item)
         .withCredentials()
-        .then(res => tree.list.value.push(res.body))
+        .then(res => {
+          tree.list.value.push(res.body);
+          reRender();
+        })
         .catch(err => console.log('post failed', err));
     }
   }
@@ -46,7 +47,6 @@ const RootComponent = React.render(
   document.body
 );
 
-// watch for changes to the tree and rerender the root component
-tree.on('update', function(newTree) {
-  RootComponent.setProps({tree: newTree});
-});
+function reRender() {
+  RootComponent.setProps({tree: tree});
+}

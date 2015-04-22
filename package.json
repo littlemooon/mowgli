@@ -7,7 +7,6 @@
     "start": "webpack --progress --colors --watch"
   },
   "dependencies": {
-    "cortexjs": "^0.8.4",
     "react": "^0.13.1"
   },
   "devDependencies": {
@@ -24,7 +23,7 @@
   },
   "keywords": [
     "react",
-    "cortex"
+    "flux"
   ],
   "author": "Fred Wright",
   "license": "MIT"

@@ -2,8 +2,11 @@
 
 import React, {PureRenderMixin} from 'react/addons';
 
+import {getCursorFns, reducePaths, mapObj} from './helpers';
+
 // know if we are on the client or the server
 const isBrowser = !(global && Object.prototype.toString.call(global.process) === '[object process]');
+let cursorFns;
 
 export default {
 	contextTypes: {
@@ -18,6 +21,7 @@ export default {
 		const cursorDefs = this.data;
 		const actions = this.context && this.context.actions;
 		const actionDefs = this.actions;
+		cursorFns = getCursorFns(tree);
 
 		// get a map of initial cursors pointing to subsets of the tree
 		const cursors = this._getCursors(cursorDefs, tree);
@@ -53,21 +57,18 @@ export default {
 	},
 
 	// get a map of cursors pointing to subsets of the tree
-	_getCursors: function(declaredCursors, tree) {
-		return this._getNestedObjectForEachKey(declaredCursors, tree, 'Cursor');
+	_getCursors: function(cursorDefs, tree) {
+		return reducePaths(cursorDefs, tree, 'Cursor', cursorFns.get);
 	},
 
 	// get a map of cursor values
 	_getCursorValues: function(cursors) {
-		return Object.keys(cursors).reduce((acc, key) => {
-			acc[key] = cursors[key].val();
-			return acc;
-		}, {});
+		return mapObj(cursors, cursor => cursorFns.value(cursor));
 	},
 
 	// get a map of actions pointing to actions in the context
-	_getActions: function(declaredActions, actions) {
-		return this._getNestedObjectForEachKey(declaredActions, actions, 'Action');
+	_getActions: function(actionDefs, actions) {
+		return reducePaths(actionDefs, actions, 'Action');
 	},
 
 	// get an array of all subscriptions to apply
@@ -84,43 +85,11 @@ export default {
 
 	// bind update event on cursor to subscription function
 	_subscribe__: function(subscription) {
-		subscription.cursor.on('update', subscription.subscribe);
+		cursorFns.on(subscription.subscribe);
 	},
 
 	// remove the bound update event from the cursor
 	_unsubscribe__: function(subscription) {
-		subscription.cursor.off('update', subscription.subscribe);
-	},
-
-	// get a map of each key to the subtree identified by the path value
-	_getNestedObjectForEachKey: function(keyObj, treeObj, errorDesc) {
-		// check yourself
-		if (!keyObj) return {};
-		if (!treeObj) throw new Error(`No ${errorDesc}s have been passed to your root component`);
-
-		// return a map of keys to nested object
-		return Object.keys(keyObj).reduce((acc, key) => {
-			acc[key] = this._getNestedObjectFromPath(keyObj[key], treeObj, errorDesc);
-			return acc;
-		}, {});
-	},
-
-	// return the subtree identified by following the given path
-	_getNestedObjectFromPath: function(path, treeObj, errorDesc) {
-		// split path into an array
-		const pathArray = path.constructor === Array ? path : path.split('.');
-
-		// navigate the object via the path array and return the result
-		return pathArray.reduce((tree, key) => {
-			const subTree = tree && tree[key];
-
-			// handle not found case
-			if (tree && subTree === undefined) {
-				console.warn(`${errorDesc} ${path} (key: ${key}) cannot be found`);
-				return null;
-			}
-
-			return subTree;
-		}, treeObj);
+		cursorFns.on(subscription.subscribe);
 	}
 };

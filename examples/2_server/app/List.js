@@ -28,7 +28,7 @@ export default React.createClass({
 	},
 
 	_renderList: function() {
-		if (this.state.isLoading === 'true') return p({}, 'Loading..');
+		if (this.state.isLoading) return p({}, 'Loading..');
 
 		return div({},
 			this.state.items.map((item, i) =>
