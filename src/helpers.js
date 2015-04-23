@@ -18,28 +18,28 @@ export default {
 		if (!tree) throw new Error(`No ${desc}s have been passed to your root component`);
 
 		// return a map of each path through the tree
-		return this.mapObj(paths, val => navigatePath(val, tree, desc, getFn));
+		return this.mapObj(paths, val => this.navigatePath(val, tree, desc, getFn));
+	},
+
+	navigatePath: function(path, tree, desc, getFn) {
+		return pathAsArray(path).reduce((obj, key) => {
+			// if we have been given a getter then use it, otherwise treat as an object
+			const value = obj && (getFn ? getFn(obj, key) : obj[key]);
+
+			if (value === undefined) console.warn(`${desc} '${path}' (key: '${key}') cannot be found`);
+
+			// return null if not found
+			return !obj || value === undefined ? null : value;
+		}, tree);
 	},
 
 	mapObj: (obj, fn) => {
 		return Object.keys(obj).reduce((acc, key) => {
-			acc[key] = fn(obj[key]);
+			acc[key] = fn(obj[key], key);
 			return acc;
 		}, {});
 	}
 };
-
-function navigatePath(path, tree, desc, getFn) {
-	return pathAsArray(path).reduce((obj, key) => {
-		// if we have been given a getter then use it, otherwise treat as an object
-		const value = obj && (getFn ? getFn(obj, key) : obj[key]);
-
-		if (value === undefined) console.warn(`${desc} '${path}' (key: '${key}') cannot be found`);
-
-		// return null if not found
-		return !obj || value === undefined ? null : value;
-	}, tree);
-}
 
 function pathAsArray(path) {
 	return path.constructor === Array ? path : path.split('.');
