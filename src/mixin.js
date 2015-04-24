@@ -2,7 +2,7 @@
 
 import React from 'react/addons';
 
-import {getCursorFns, reducePaths, mapObj} from './helpers';
+import {getCursorFns, reducePaths, mapObj} from 'the-jungle-common';
 
 // know if we are on the client or the server
 const isBrowser = !(global && Object.prototype.toString.call(global.process) === '[object process]');

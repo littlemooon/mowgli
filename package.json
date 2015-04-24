@@ -7,7 +7,8 @@
     "start": "webpack --progress --colors --watch"
   },
   "dependencies": {
-    "react": "^0.13.1"
+    "react": "^0.13.1",
+    "the-jungle-common": "0.0.1"
   },
   "devDependencies": {
     "babel-core": "^5.1.10",
