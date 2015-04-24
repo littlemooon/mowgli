@@ -21,7 +21,7 @@ export default {
 		return this.mapObj(paths, val => this.navigatePath(val, tree, desc, getFn));
 	},
 
-	navigatePath: function(path, tree, desc, getFn) {
+	navigatePath: (path, tree, desc, getFn) => {
 		return pathAsArray(path).reduce((obj, key) => {
 			// if we have been given a getter then use it, otherwise treat as an object
 			const value = obj && (getFn ? getFn(obj, key) : obj[key]);
@@ -38,12 +38,12 @@ export default {
 			acc[key] = fn(obj[key], key);
 			return acc;
 		}, {});
-	}
+	},
+
+	callIfFunction: (obj, ...args) => typeof obj === 'function' ? obj(...args) : obj
 };
 
-function pathAsArray(path) {
-	return path.constructor === Array ? path : path.split('.');
-}
+const pathAsArray = (path) => path.constructor === Array ? path : path.split('.');
 
 // define api for different tree implementations
 const cursorFns = {

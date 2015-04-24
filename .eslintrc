@@ -10,7 +10,9 @@
     modules: true,
     objectLiteralShorthandProperties: true,
     objectLiteralComputedProperties: true,
-    classes: true
+    classes: true,
+    spread: true,
+    destructuring: true
   },
   rules: {
     quotes: "single",
