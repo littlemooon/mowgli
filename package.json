@@ -1,7 +1,7 @@
 {
   "name": "mowgli",
-  "version": "0.1.1",
-  "description": "Thin React application layer for interacting with a single tree of state",
+  "version": "0.1.2",
+  "description": "Thin layer over React JS for interacting with a single tree of state",
   "main": "index.js",
   "scripts": {
     "start": "webpack --progress --colors --watch"
@@ -23,7 +23,14 @@
   },
   "keywords": [
     "react",
-    "flux"
+    "flux",
+    "baobab",
+    "cortex",
+    "immstruct",
+    "cursor",
+    "om",
+    "jungle",
+    "kaa"
   ],
   "author": "Fred Wright",
   "license": "MIT"
