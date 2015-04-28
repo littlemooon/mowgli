@@ -1,10 +1,10 @@
 {
   "name": "mowgli",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Thin layer over React JS for interacting with a single tree of state",
-  "main": "mowgli.js",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "babel src --out-file mowgli.js"
+    "build": "babel -d dist ./src"
   },
   "dependencies": {
     "the-jungle-common": "^0.1.0"

@@ -2,62 +2,6 @@
 
 var _interopRequireDefault = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
 
-Object.defineProperty(exports, '__esModule', {
-	value: true
-});
-
-var _React = require('react');
-
-var _React2 = _interopRequireDefault(_React);
-
-'use strict';
-
-exports['default'] = {
-	propTypes: {
-		tree: _React2['default'].PropTypes.object.isRequired,
-		actions: _React2['default'].PropTypes.object
-	},
-
-	childContextTypes: {
-		tree: _React2['default'].PropTypes.object,
-		actions: _React2['default'].PropTypes.object
-	},
-
-	getChildContext: function getChildContext() {
-		return {
-			tree: this.props.tree,
-			actions: this.props.actions
-		};
-	}
-};
-module.exports = exports['default'];
-'use strict';
-
-var _interopRequireDefault = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
-Object.defineProperty(exports, '__esModule', {
-	value: true
-});
-
-var _Mixin = require('./Mixin');
-
-var _Mixin2 = _interopRequireDefault(_Mixin);
-
-var _RootMixin = require('./RootMixin');
-
-var _RootMixin2 = _interopRequireDefault(_RootMixin);
-
-'use strict';
-
-exports['default'] = {
-	Mixin: _Mixin2['default'],
-	RootMixin: _RootMixin2['default']
-};
-module.exports = exports['default'];
-'use strict';
-
-var _interopRequireDefault = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
 var _defineProperty = function (obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); };
 
 Object.defineProperty(exports, '__esModule', {
