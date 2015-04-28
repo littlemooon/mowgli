@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react/addons';
+import React from 'react';
 import {RootMixin} from 'mowgli';
 
 const RouteButton = React.createFactory(require('./RouteButton'));

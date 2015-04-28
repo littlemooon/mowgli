@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react/addons';
+import React from 'react';
 import request from 'blueagent';
 
 const App = React.createFactory(require('./app/App'));

@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react/addons';
+import React from 'react';
 
 import {getCursorFns, reducePaths, mapObj} from 'the-jungle-common';
 

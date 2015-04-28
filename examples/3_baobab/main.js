@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react/addons';
+import React from 'react';
 import Baobab from 'baobab';
 
 const App = React.createFactory(require('./app/App'));
