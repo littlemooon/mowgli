@@ -19,6 +19,7 @@
   "dependencies": {
     "baobab": "^1.0.1",
     "react": "^0.13.2",
+    "mowgli": "^0.1.0",
     "react-router": "^0.13.2"
   }
 }

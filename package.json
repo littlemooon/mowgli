@@ -1,14 +1,14 @@
 {
   "name": "mowgli",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Thin layer over React JS for interacting with a single tree of state",
-  "main": "index.js",
+  "main": "mowgli.js",
   "scripts": {
     "start": "webpack --progress --colors --watch"
   },
   "dependencies": {
     "react": "^0.13.1",
-    "the-jungle-common": "0.0.1"
+    "the-jungle-common": "^0.1.0"
   },
   "devDependencies": {
     "babel-core": "^5.1.10",

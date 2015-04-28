@@ -17,6 +17,7 @@
     "webpack-dev-server": "^1.8.0"
   },
   "dependencies": {
-    "baobab": "^1.0.1"
+    "baobab": "^1.0.1",
+    "mowgli": "^0.1.0"
   }
 }

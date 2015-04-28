@@ -21,10 +21,9 @@ module.exports = {
 
     loaders: [
       { test: /\.js$/, loaders: ['babel'], exclude: /node_modules/ }
-    ],
-
-    noParse: [
-      /node_modules\/cortex/
     ]
+  },
+  externals: {
+    'react/addons': 'React'
   }
 };
