@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import {getCursorFns, reducePaths, mapObj} from 'the-jungle-common';
+import {getCursorFns, reducePaths, mapObj, throwError} from 'the-jungle-common';
 
 // know if we are on the client or the server
 const isBrowser = !(global && Object.prototype.toString.call(global.process) === '[object process]');
@@ -11,15 +11,20 @@ let cursorFns;
 export default {
 	contextTypes: {
 		tree: React.PropTypes.object,
-		actions: React.PropTypes.object
+		actions: React.PropTypes.object,
+		cursorFns: React.PropTypes.object
 	},
 
 	componentWillMount: function() {
 		const tree = this.context && this.context.tree;
+		if (!tree) throwError(`No tree has been passed to your root component`);
 		const cursorDefs = this.data;
 		const actions = this.context && this.context.actions;
 		const actionDefs = this.actions;
 		cursorFns = getCursorFns(tree);
+
+		// add the declared actions to the component
+		this.actions = getActions(actionDefs, actions);
 
 		// get a map of initial cursors pointing to subsets of the tree
 		const cursors = getCursors(cursorDefs, tree);
@@ -30,9 +35,6 @@ export default {
 		// subscribe to the update event for each cursor
 		const subscribe = s => cursorFns.on && cursorFns.on(s.cursor, s.subscribe);
 		this._subscriptions.forEach(subscribe);
-
-		// add the declared actions to the component
-		this.actions = getActions(actionDefs, actions);
 
 		// add the cursor values to the component state
 		const cursorValues = getCursorValues(cursors);
