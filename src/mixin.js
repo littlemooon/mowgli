@@ -18,8 +18,9 @@ export default {
 	componentWillMount: function() {
 		const tree = this.context && this.context.tree;
 		if (!tree) throwError(`No tree has been passed to your root component`);
-		const cursorDefs = this.data;
 		const actions = this.context && this.context.actions;
+
+		const cursorDefs = this.data;
 		const actionDefs = this.actions;
 		cursorFns = getCursorFns(tree);
 
@@ -33,7 +34,7 @@ export default {
 		this._subscriptions = getSubscriptions(this, cursors);
 
 		// subscribe to the update event for each cursor
-		const subscribe = s => cursorFns.on && cursorFns.on(s.cursor, s.subscribe);
+		const subscribe = s => cursorFns.on(s.cursor, s.subscribe);
 		this._subscriptions.forEach(subscribe);
 
 		// add the cursor values to the component state
@@ -44,6 +45,8 @@ export default {
 	componentWillReceiveProps: function() {
 		const tree = this.context = this.context.tree;
 		const cursorDefs = this.data;
+		console.log('reading context');
+		console.log(tree);
 
 		// update cursor values
 		const cursorValues = getCursorValues(getCursors(cursorDefs, tree));
@@ -58,18 +61,18 @@ export default {
 };
 
 // get a map of cursors pointing to subsets of the tree
-const getCursors = (cursorDefs, tree) => reducePaths(cursorDefs, tree, 'Cursor', cursorFns.get);
+const getCursors = (cursorDefs, tree) => reducePaths(cursorDefs, tree, cursorFns.get);
 
 // get a map of cursor values
 const getCursorValues = cursors => mapObj(cursors, cursor => cursorFns.value(cursor));
 
 // get a map of actions pointing to actions in the context
-const getActions = (actionDefs, actions) => reducePaths(actionDefs, actions, 'Action');
+const getActions = (actionDefs, actions) => reducePaths(actionDefs, actions, false, 'Action');
 
 // get an array of all subscriptions to apply
 const getSubscriptions = (component, cursors) => {
-	// do not subscribe to anything on the server (rerender from root)
-	if (!isBrowser) return [];
+	// render from root on the server
+	if (!isBrowser || !cursorFns.on) return [];
 
 	// return an array of subscription functions that update tree on change
 	return Object.keys(cursors).map(key => ({
