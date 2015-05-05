@@ -59,8 +59,6 @@ exports['default'] = {
 	componentWillReceiveProps: function componentWillReceiveProps() {
 		var tree = this.context = this.context.tree;
 		var cursorDefs = this.data;
-		console.log('reading context');
-		console.log(tree);
 
 		// update cursor values
 		var cursorValues = getCursorValues(getCursors(cursorDefs, tree));
