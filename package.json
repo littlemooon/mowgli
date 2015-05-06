@@ -1,6 +1,6 @@
 {
   "name": "mowgli",
-  "version": "0.1.14",
+  "version": "0.1.0",
   "description": "Thin layer over React JS for interacting with a single tree of state",
   "main": "dist/index.js",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "react": "^0.13.2",
-    "the-jungle-common": "^0.1.0"
+    "junglejs-common": "^0.1.0"
   },
   "devDependencies": {
     "babel-core": "^5.1.13",
