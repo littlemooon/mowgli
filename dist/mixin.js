@@ -12,7 +12,7 @@ var _React = require('react');
 
 var _React2 = _interopRequireDefault(_React);
 
-var _getCursorFns$reducePaths$mapObj$throwError = require('the-jungle-common');
+var _getCursorFns$reducePaths$mapObj$throwError = require('junglejs-common');
 
 'use strict';
 
