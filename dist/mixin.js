@@ -12,7 +12,7 @@ var _React = require('react');
 
 var _React2 = _interopRequireDefault(_React);
 
-var _getCursorFns$reducePaths$mapObj$throwError = require('junglejs-common');
+var _getCursorFns$reducePaths$mapObj$throwError$debounce = require('junglejs-common');
 
 'use strict';
 
@@ -29,12 +29,12 @@ exports['default'] = {
 
 	componentWillMount: function componentWillMount() {
 		var tree = this.context && this.context.tree;
-		if (!tree) _getCursorFns$reducePaths$mapObj$throwError.throwError('No tree has been passed to your root component');
+		if (!tree) _getCursorFns$reducePaths$mapObj$throwError$debounce.throwError('No tree has been passed to your root component');
 		var actions = this.context && this.context.actions;
 
 		var cursorDefs = this.data;
 		var actionDefs = this.actions;
-		cursorFns = _getCursorFns$reducePaths$mapObj$throwError.getCursorFns(tree);
+		cursorFns = _getCursorFns$reducePaths$mapObj$throwError$debounce.getCursorFns(tree);
 
 		// add the declared actions to the component
 		this.actions = getActions(actionDefs, actions);
@@ -76,19 +76,19 @@ exports['default'] = {
 
 // get a map of cursors pointing to subsets of the tree
 var getCursors = function getCursors(cursorDefs, tree) {
-	return _getCursorFns$reducePaths$mapObj$throwError.reducePaths(cursorDefs, tree, cursorFns.get);
+	return _getCursorFns$reducePaths$mapObj$throwError$debounce.reducePaths(cursorDefs, tree, cursorFns.get);
 };
 
 // get a map of cursor values
 var getCursorValues = function getCursorValues(cursors) {
-	return _getCursorFns$reducePaths$mapObj$throwError.mapObj(cursors, function (cursor) {
+	return _getCursorFns$reducePaths$mapObj$throwError$debounce.mapObj(cursors, function (cursor) {
 		return cursorFns.value(cursor);
 	});
 };
 
 // get a map of actions pointing to actions in the context
 var getActions = function getActions(actionDefs, actions) {
-	return _getCursorFns$reducePaths$mapObj$throwError.reducePaths(actionDefs, actions, false, 'Action');
+	return _getCursorFns$reducePaths$mapObj$throwError$debounce.reducePaths(actionDefs, actions, false, 'Action');
 };
 
 // get an array of all subscriptions to apply
@@ -100,9 +100,9 @@ var getSubscriptions = function getSubscriptions(component, cursors) {
 	return Object.keys(cursors).map(function (key) {
 		return {
 			cursor: cursors[key],
-			subscribe: function subscribe() {
+			subscribe: _getCursorFns$reducePaths$mapObj$throwError$debounce.debounce(function () {
 				return component.setState(_defineProperty({}, key, cursorFns.value(cursors[key])));
-			}
+			})
 		};
 	});
 };

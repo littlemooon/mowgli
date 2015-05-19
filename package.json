@@ -1,6 +1,6 @@
 {
   "name": "mowgli",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Thin layer over React JS for interacting with a single tree of state",
   "main": "dist/index.js",
   "scripts": {

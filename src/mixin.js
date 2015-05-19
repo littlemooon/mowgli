@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import {getCursorFns, reducePaths, mapObj, throwError} from 'junglejs-common';
+import {getCursorFns, reducePaths, mapObj, throwError, debounce} from 'junglejs-common';
 
 // know if we are on the client or the server
 const isBrowser = !(global && Object.prototype.toString.call(global.process) === '[object process]');
@@ -75,6 +75,6 @@ const getSubscriptions = (component, cursors) => {
 	// return an array of subscription functions that update tree on change
 	return Object.keys(cursors).map(key => ({
 		cursor: cursors[key],
-		subscribe: () => component.setState({[key]: cursorFns.value(cursors[key])})
+		subscribe: debounce(() => component.setState({[key]: cursorFns.value(cursors[key])}))
 	}));
 };
